@@ -367,8 +367,7 @@ elif selection == "Mathematical Theories":
         elif v_type == "euler_formula":
             st.markdown("**Visualization: Euler’s Formula in the Complex Plane**")
             theta = np.linspace(0, 2*np.pi, 400)
-            e = np.exp(1)
-            points = e ** (1j * theta)
+            points = np.exp(1j * theta)
             x = points.real
             y = points.imag
             
@@ -527,195 +526,193 @@ elif selection == "Mathematical Theories":
             """)
             st.image("https://upload.wikimedia.org/wikipedia/commons/0/0a/Feynman_diagram.svg", caption="Feynman Diagram", use_column_width=True)
         
-        # Add more visualization types as needed
-
-    # Mathematics in Physics Section
-    elif selection == "Mathematics in Physics":
-        st.title("🔬 Mathematics in Physics")
-        st_lottie(physics_animation, height=300, key="physics")
-        
-        st.header("Quantum Mechanics")
-        st.markdown("""
-        The formulation of **quantum mechanics** relies heavily on linear algebra and complex Hilbert spaces. The mathematical framework predicts phenomena like superposition and entanglement, which have been experimentally verified.
-        """)
-        
-        st.header("General Relativity")
-        st.markdown("""
-        **General Relativity** uses differential geometry to describe the fabric of spacetime. Einstein's field equations, which are highly mathematical, have been confirmed through observations like gravitational lensing and the recent detection of gravitational waves.
-        """)
-        
-        st.header("String Theory")
-        st.markdown("""
-        **String Theory** employs advanced mathematical concepts from topology, algebraic geometry, and higher-dimensional spaces to attempt a unified description of all fundamental forces.
-        """)
+        else:
+            st.markdown("**Visualization for this concept is under development.**")
     
-    # Interactive Visualizations Section
-    elif selection == "Interactive Visualizations":
-        st.title("🔍 Interactive Visualizations")
-        
-        st.header("Explore Mathematical Concepts and Their Physical Applications")
-        st.markdown("""
-        Select a mathematical concept from the dropdown menu below to explore its physical application through interactive visualizations and animations.
-        """)
-        
-        # Dropdown to select a mathematical concept
-        math_options = [
-            "Newtonian Mechanics and Calculus",
-            "Maxwell’s Equations and Electromagnetism",
-            "General Relativity and Non-Euclidean Geometry",
-            "Quantum Mechanics and Linear Algebra",
-            "The Standard Model and Group Theory",
-            "Fourier Analysis and Signal Processing",
-            "Chaos Theory and Fractals",
-            "Complex Numbers and Electrical Engineering",
-            "Statistics and Machine Learning",
-            "Euler’s Formula and Beauty",
-            "Information Theory",
-            "Prime Numbers and Cryptography",
-            "Game Theory in Biology and Economics",
-            "Statistical Mechanics and Thermodynamics",
-            "Topology in Physics",
-            "Neural Networks and Backpropagation",
-            "Symmetry and the Universe (Noether's Theorem)",
-            "Mathematical Biology",
-            "Deep Space Navigation and Math",
-            "Quantum Field Theory and Renormalization"
-        ]
-        
-        selected_math = st.selectbox("Select a Mathematical Concept:", math_options)
-        
-        if selected_math:
-            st.subheader(selected_math)
-            # Find the concept in math_concepts
-            concept = next((item for item in math_concepts if item["title"].endswith(selected_math.split(" ")[0] + ".")), None)
-            if not concept:
-                # Adjust matching if necessary
-                concept = next((item for item in math_concepts if selected_math in item["title"]), None)
-            
-            if concept:
-                st.markdown(f"**What?** {concept['what']}")
-                st.markdown(f"**Unreasonable Effectiveness:** {concept['effectiveness']}")
-                
-                # Generate visualization based on type
-                generate_visualization(concept["visualization_type"])
-            else:
-                st.markdown("**Visualization for this concept is under development.**")
-
-    # Quiz Section
-    elif selection == "Quiz":
-        st.title("📝 Quiz: Test Your Understanding")
-        
-        # Define quiz questions
-        quiz_questions = [
-            {
-                "question": "Which philosophical view posits that mathematical entities exist independently of human minds?",
-                "options": ["Platonism", "Nominalism", "Constructivism", "Empiricism"],
-                "answer": "Platonism"
-            },
-            {
-                "question": "Which mathematical theory is essential for the formulation of quantum mechanics?",
-                "options": ["Calculus", "Complex Numbers", "Topology", "Graph Theory"],
-                "answer": "Complex Numbers"
-            },
-            {
-                "question": "What does Non-Euclidean geometry primarily deal with?",
-                "options": ["Flat surfaces", "Curved surfaces", "Two-dimensional spaces", "None of the above"],
-                "answer": "Curved surfaces"
-            },
-            {
-                "question": "Which mathematical concept is crucial for understanding the bending of light in General Relativity?",
-                "options": ["Linear Algebra", "Differential Geometry", "Probability Theory", "Number Theory"],
-                "answer": "Differential Geometry"
-            },
-            {
-                "question": "Euler’s formula links five fundamental constants in mathematics. Which of the following is NOT one of them?",
-                "options": ["e", "i", "π", "√2", "0"],
-                "answer": "√2"
-            },
-            {
-                "question": "Which mathematical method is used to predict weather patterns through the butterfly effect?",
-                "options": ["Calculus", "Chaos Theory", "Group Theory", "Statistics"],
-                "answer": "Chaos Theory"
-            },
-            {
-                "question": "What does Noether's Theorem relate in physics?",
-                "options": ["Energy and Mass", "Symmetry and Conservation Laws", "Force and Acceleration", "Entropy and Temperature"],
-                "answer": "Symmetry and Conservation Laws"
-            },
-            {
-                "question": "Which mathematical theory underpins modern encryption systems like RSA?",
-                "options": ["Prime Numbers", "Fourier Analysis", "Neural Networks", "Topology"],
-                "answer": "Prime Numbers"
-            },
-            {
-                "question": "What mathematical framework is used to model animal behaviors and economic markets?",
-                "options": ["Game Theory", "Statistics", "Linear Algebra", "Differential Equations"],
-                "answer": "Game Theory"
-            },
-            {
-                "question": "Which equation represents Euler’s Formula?",
-                "options": ["e^{iπ} + 1 = 0", "F = ma", "E = mc²", "a² + b² = c²"],
-                "answer": "e^{iπ} + 1 = 0"
-            },
-        ]
-        
-        # Initialize session state for quiz progress
-        if 'quiz_progress' not in st.session_state:
-            st.session_state.quiz_progress = {}
-        
-        # Iterate through questions
-        for idx, q in enumerate(quiz_questions, 1):
-            st.markdown(f"**Question {idx}:** {q['question']}")
-            user_answer = st.radio(f"Select an option for Question {idx}:", q['options'], key=f"q{idx}")
-            if st.button(f"Submit Q{idx}"):
-                if user_answer == q['answer']:
-                    st.success("Correct!")
-                else:
-                    st.error(f"Incorrect. The correct answer is {q['answer']}.")
-            st.markdown("---")
+# Mathematics in Physics Section
+elif selection == "Mathematics in Physics":
+    st.title("🔬 Mathematics in Physics")
+    st_lottie(physics_animation, height=300, key="physics")
     
-    # References Section
-    elif selection == "References":
-        st.title("📚 References & Further Reading")
-        st.markdown("""
-        - **Wigner, E. P.** (1960). *The Unreasonable Effectiveness of Mathematics in the Natural Sciences*. Communications in Pure and Applied Mathematics, 13(1), 1-14.
-        - **Polya, G.** (1975). *Mathematics and Plausible Reasoning*. Princeton University Press.
-        - **Penrose, R.** (2004). *The Road to Reality: A Complete Guide to the Laws of the Universe*. Vintage.
-        - **Lovelock, J.** (2006). *The Dream of a Final Theory*. Houghton Mifflin Harcourt.
-        - **Lange, D.** (1993). *Physics and Philosophy: The Revolution in Modern Science*. Prometheus Books.
-        - **Linnebo, Ø.** (2004). *Scientific Realism and Structural Realism*. Oxford University Press.
-        - **Strogatz, S.** (2009). *The Joy of x: A Guided Tour of Math, from One to Infinity*. Houghton Mifflin Harcourt.
-        """)
-        st.markdown("""
-        **Online Resources:**
-        - [LottieFiles - Free Animations](https://lottiefiles.com/)
-        - [Plotly - Interactive Graphing](https://plotly.com/python/)
-        - [Streamlit Documentation](https://docs.streamlit.io/)
-        """)
-    
-        st.markdown("""
-        **Educational Videos:**
-        - [Khan Academy](https://www.khanacademy.org/)
-        - [3Blue1Brown](https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw)
-        - [Numberphile](https://www.youtube.com/user/numberphile)
-        """)
-    
-        st.markdown("""
-        **Interactive Simulations:**
-        - [PhET Interactive Simulations](https://phet.colorado.edu/)
-        - [Desmos Graphing Calculator](https://www.desmos.com/calculator)
-        """)
-    
-        st.markdown("""
-        **Research Papers:**
-        - [Wigner's Original Paper](https://mathworld.wolfram.com/WignersUnreasonableEffectiveness.html)
-        - [Noether's Theorem](https://en.wikipedia.org/wiki/Noether%27s_theorem)
-        """)
-    
-    # Footer
-    st.markdown("---")
+    st.header("Quantum Mechanics")
     st.markdown("""
-        **Developed by:** [Your Name]
-        **Contact:** your.email@example.com
-        **GitHub:** [github.com/yourusername](https://github.com/yourusername)
+    The formulation of **quantum mechanics** relies heavily on linear algebra and complex Hilbert spaces. The mathematical framework predicts phenomena like superposition and entanglement, which have been experimentally verified.
     """)
+    
+    st.header("General Relativity")
+    st.markdown("""
+    **General Relativity** uses differential geometry to describe the fabric of spacetime. Einstein's field equations, which are highly mathematical, have been confirmed through observations like gravitational lensing and the recent detection of gravitational waves.
+    """)
+    
+    st.header("String Theory")
+    st.markdown("""
+    **String Theory** employs advanced mathematical concepts from topology, algebraic geometry, and higher-dimensional spaces to attempt a unified description of all fundamental forces.
+    """)
+
+# Interactive Visualizations Section
+elif selection == "Interactive Visualizations":
+    st.title("🔍 Interactive Visualizations")
+    
+    st.header("Explore Mathematical Concepts and Their Physical Applications")
+    st.markdown("""
+    Select a mathematical concept from the dropdown menu below to explore its physical application through interactive visualizations and animations.
+    """)
+    
+    # Dropdown to select a mathematical concept
+    math_options = [
+        "Newtonian Mechanics and Calculus",
+        "Maxwell’s Equations and Electromagnetism",
+        "General Relativity and Non-Euclidean Geometry",
+        "Quantum Mechanics and Linear Algebra",
+        "The Standard Model and Group Theory",
+        "Fourier Analysis and Signal Processing",
+        "Chaos Theory and Fractals",
+        "Complex Numbers and Electrical Engineering",
+        "Statistics and Machine Learning",
+        "Euler’s Formula and Beauty",
+        "Information Theory",
+        "Prime Numbers and Cryptography",
+        "Game Theory in Biology and Economics",
+        "Statistical Mechanics and Thermodynamics",
+        "Topology in Physics",
+        "Neural Networks and Backpropagation",
+        "Symmetry and the Universe (Noether's Theorem)",
+        "Mathematical Biology",
+        "Deep Space Navigation and Math",
+        "Quantum Field Theory and Renormalization"
+    ]
+    
+    selected_math = st.selectbox("Select a Mathematical Concept:", math_options)
+    
+    if selected_math:
+        st.subheader(selected_math)
+        # Find the concept in math_concepts
+        concept = next((item for item in math_concepts if selected_math in item["title"]), None)
+        
+        if concept:
+            st.markdown(f"**What?** {concept['what']}")
+            st.markdown(f"**Unreasonable Effectiveness:** {concept['effectiveness']}")
+            
+            # Generate visualization based on type
+            generate_visualization(concept["visualization_type"])
+        else:
+            st.markdown("**Visualization for this concept is under development.**")
+
+# Quiz Section
+elif selection == "Quiz":
+    st.title("📝 Quiz: Test Your Understanding")
+    
+    # Define quiz questions
+    quiz_questions = [
+        {
+            "question": "Which philosophical view posits that mathematical entities exist independently of human minds?",
+            "options": ["Platonism", "Nominalism", "Constructivism", "Empiricism"],
+            "answer": "Platonism"
+        },
+        {
+            "question": "Which mathematical theory is essential for the formulation of quantum mechanics?",
+            "options": ["Calculus", "Complex Numbers", "Topology", "Graph Theory"],
+            "answer": "Complex Numbers"
+        },
+        {
+            "question": "What does Non-Euclidean geometry primarily deal with?",
+            "options": ["Flat surfaces", "Curved surfaces", "Two-dimensional spaces", "None of the above"],
+            "answer": "Curved surfaces"
+        },
+        {
+            "question": "Which mathematical concept is crucial for understanding the bending of light in General Relativity?",
+            "options": ["Linear Algebra", "Differential Geometry", "Probability Theory", "Number Theory"],
+            "answer": "Differential Geometry"
+        },
+        {
+            "question": "Euler’s formula links five fundamental constants in mathematics. Which of the following is NOT one of them?",
+            "options": ["e", "i", "π", "√2", "0"],
+            "answer": "√2"
+        },
+        {
+            "question": "Which mathematical method is used to predict weather patterns through the butterfly effect?",
+            "options": ["Calculus", "Chaos Theory", "Group Theory", "Statistics"],
+            "answer": "Chaos Theory"
+        },
+        {
+            "question": "What does Noether's Theorem relate in physics?",
+            "options": ["Energy and Mass", "Symmetry and Conservation Laws", "Force and Acceleration", "Entropy and Temperature"],
+            "answer": "Symmetry and Conservation Laws"
+        },
+        {
+            "question": "Which mathematical theory underpins modern encryption systems like RSA?",
+            "options": ["Prime Numbers", "Fourier Analysis", "Neural Networks", "Topology"],
+            "answer": "Prime Numbers"
+        },
+        {
+            "question": "What mathematical framework is used to model animal behaviors and economic markets?",
+            "options": ["Game Theory", "Statistics", "Linear Algebra", "Differential Equations"],
+            "answer": "Game Theory"
+        },
+        {
+            "question": "Which equation represents Euler’s Formula?",
+            "options": ["e^{iπ} + 1 = 0", "F = ma", "E = mc²", "a² + b² = c²"],
+            "answer": "e^{iπ} + 1 = 0"
+        },
+    ]
+    
+    # Initialize session state for quiz progress
+    if 'quiz_progress' not in st.session_state:
+        st.session_state.quiz_progress = {}
+    
+    # Iterate through questions
+    for idx, q in enumerate(quiz_questions, 1):
+        st.markdown(f"**Question {idx}:** {q['question']}")
+        user_answer = st.radio(f"Select an option for Question {idx}:", q['options'], key=f"q{idx}")
+        if st.button(f"Submit Q{idx}"):
+            if user_answer == q['answer']:
+                st.success("Correct!")
+            else:
+                st.error(f"Incorrect. The correct answer is {q['answer']}.")
+        st.markdown("---")
+
+# References Section
+elif selection == "References":
+    st.title("📚 References & Further Reading")
+    st.markdown("""
+    - **Wigner, E. P.** (1960). *The Unreasonable Effectiveness of Mathematics in the Natural Sciences*. Communications in Pure and Applied Mathematics, 13(1), 1-14.
+    - **Polya, G.** (1975). *Mathematics and Plausible Reasoning*. Princeton University Press.
+    - **Penrose, R.** (2004). *The Road to Reality: A Complete Guide to the Laws of the Universe*. Vintage.
+    - **Lovelock, J.** (2006). *The Dream of a Final Theory*. Houghton Mifflin Harcourt.
+    - **Lange, D.** (1993). *Physics and Philosophy: The Revolution in Modern Science*. Prometheus Books.
+    - **Linnebo, Ø.** (2004). *Scientific Realism and Structural Realism*. Oxford University Press.
+    - **Strogatz, S.** (2009). *The Joy of x: A Guided Tour of Math, from One to Infinity*. Houghton Mifflin Harcourt.
+    """)
+    st.markdown("""
+    **Online Resources:**
+    - [LottieFiles - Free Animations](https://lottiefiles.com/)
+    - [Plotly - Interactive Graphing](https://plotly.com/python/)
+    - [Streamlit Documentation](https://docs.streamlit.io/)
+    """)
+    
+    st.markdown("""
+    **Educational Videos:**
+    - [Khan Academy](https://www.khanacademy.org/)
+    - [3Blue1Brown](https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw)
+    - [Numberphile](https://www.youtube.com/user/numberphile)
+    """)
+    
+    st.markdown("""
+    **Interactive Simulations:**
+    - [PhET Interactive Simulations](https://phet.colorado.edu/)
+    - [Desmos Graphing Calculator](https://www.desmos.com/calculator)
+    """)
+    
+    st.markdown("""
+    **Research Papers:**
+    - [Wigner's Original Paper](https://mathworld.wolfram.com/WignersUnreasonableEffectiveness.html)
+    - [Noether's Theorem](https://en.wikipedia.org/wiki/Noether%27s_theorem)
+    """)
+
+# Footer
+st.markdown("---")
+st.markdown("""
+    **Developed by:** [Your Name]
+    **Contact:** your.email@example.com
+    **GitHub:** [github.com/yourusername](https://github.com/yourusername)
+""")
