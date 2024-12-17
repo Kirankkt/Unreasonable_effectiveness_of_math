@@ -228,8 +228,8 @@ elif selection == "References":
 # Footer
 st.markdown("---")
 st.markdown("""
-    **Developed by:** [Your Name]
-    **Contact:** your.email@example.com
-    **GitHub:** [github.com/yourusername](https://github.com/yourusername)
+    **Developed by:** [Kiran K Thomas]
+    **Contact:** kthomaskiran3@gmail.com
+    **GitHub:** [github.com/Kirankkt](https://github.com/Kirankkt)
 """)
 
